@@ -1,13 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head><title>Create Account</title></head>
+<head>
+    <title>Create Account</title>
+</head>
 <body>
 <h2>Create Account</h2>
 <form action="account" method="post">
-    Name: <input name="name" required><br>
-    Username: <input name="username" required><br>
+    Name: <input type="text" name="name" required><br>
+    Username: <input type="text" name="username" required><br>
     Password: <input type="password" name="password" required><br>
-    <button>Create</button>
+    <input type="submit" value="Create Account">
 </form>
-<a href="login.jsp">Back to Login</a>
+<p style="color:red;">
+    <%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %>
+</p>
+<a href="login.jsp">Already have an account? Login</a>
 </body>
 </html>

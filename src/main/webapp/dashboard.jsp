@@ -1,5 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.bank.model.Account" %>
-<%@ page session="true" %>
 <%
     Account acc = (Account) session.getAttribute("account");
     if(acc == null){
@@ -8,13 +8,15 @@
     }
 %>
 <html>
-<head><title>Dashboard</title></head>
+<head>
+    <title>Dashboard</title>
+</head>
 <body>
 <h2>Welcome, <%= acc.getName() %>!</h2>
-Balance: <%= acc.getBalance() %><br><br>
+<p>Username: <%= acc.getUsername() %></p>
+<p>Balance: $<%= acc.getBalance() %></p>
 
-<a href="transaction.jsp">Deposit / Withdraw</a><br>
+<a href="transaction.jsp">Make a Transaction</a> | 
 <a href="logout">Logout</a>
 </body>
 </html>
-

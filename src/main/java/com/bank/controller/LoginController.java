@@ -5,33 +5,28 @@
 
 package com.bank.controller;
 
-import com.bank.dao.FakeBankDAO;
 import com.bank.model.Account;
+import com.bank.dao.FakeBankDAO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 
+@WebServlet("/login")
 public class LoginController extends HttpServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        Account acc = FakeBankDAO.login(username, password);
 
-        FakeBankDAO dao = new FakeBankDAO();
-        Account acc = dao.login(username, password);
-
-        if (acc != null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("account", acc);
-            res.sendRedirect("dashboard.jsp");
+        if(acc != null){
+            request.getSession().setAttribute("account", acc);
+            response.sendRedirect("dashboard.jsp");
         } else {
-            res.sendRedirect("login.jsp?error=1");
+            request.setAttribute("error", "Invalid username or password");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }

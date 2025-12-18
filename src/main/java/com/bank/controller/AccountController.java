@@ -6,29 +6,29 @@
 
 package com.bank.controller;
 
-
-
-import com.bank.dao.FakeBankDAO;
 import com.bank.model.Account;
+import com.bank.dao.FakeBankDAO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 
+@WebServlet("/account")
 public class AccountController extends HttpServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        Account acc = new Account();
-        acc.setName(req.getParameter("name"));
-        acc.setUsername(req.getParameter("username"));
-        acc.setPassword(req.getParameter("password"));
-        acc.setBalance(0);
+        Account acc = FakeBankDAO.createAccount(name, username, password);
 
-        new FakeBankDAO().createAccount(acc);
-        res.sendRedirect("login.jsp"); // after creating account go to login
+        if(acc != null){
+            request.getSession().setAttribute("account", acc);
+            response.sendRedirect("dashboard.jsp");
+        } else {
+            request.setAttribute("error", "Account creation failed.");
+            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+        }
     }
 }

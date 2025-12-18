@@ -1,10 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bank.dao;
-
-
 
 import com.bank.model.Account;
 import java.util.HashMap;
@@ -12,16 +6,22 @@ import java.util.Map;
 
 public class FakeBankDAO {
 
-    // In-memory account storage
+    // Store accounts in a HashMap
     private static Map<String, Account> accounts = new HashMap<>();
 
-    // Create new account
-    public void createAccount(Account acc) {
-        accounts.put(acc.getUsername(), acc);
+    // Create a new account
+    public static Account createAccount(String name, String username, String password) {
+        // Check if username already exists
+        if(accounts.containsKey(username)){
+            return null; // account creation failed
+        }
+        Account acc = new Account(name, username, password, 0.0);
+        accounts.put(username, acc);
+        return acc;
     }
 
-    // Login method
-    public Account login(String username, String password) {
+    // Login
+    public static Account login(String username, String password) {
         Account acc = accounts.get(username);
         if(acc != null && acc.getPassword().equals(password)) {
             return acc;
@@ -29,8 +29,24 @@ public class FakeBankDAO {
         return null;
     }
 
-    // Update account after transaction
-    public void updateAccount(Account acc) {
-        accounts.put(acc.getUsername(), acc);
+    // Deposit money
+    public static void deposit(Account acc, double amount) {
+        acc.setBalance(acc.getBalance() + amount);
+        accounts.put(acc.getUsername(), acc); // update the map
+    }
+
+    // Withdraw money
+    public static boolean withdraw(Account acc, double amount) {
+        if(acc.getBalance() >= amount) {
+            acc.setBalance(acc.getBalance() - amount);
+            accounts.put(acc.getUsername(), acc); // update the map
+            return true;
+        }
+        return false; // insufficient balance
+    }
+
+    // Optional: get account by username
+    public static Account getAccount(String username) {
+        return accounts.get(username);
     }
 }

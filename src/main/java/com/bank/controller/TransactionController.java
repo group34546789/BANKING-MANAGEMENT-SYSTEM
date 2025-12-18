@@ -7,47 +7,42 @@
 
 package com.bank.controller;
 
-import com.bank.dao.FakeBankDAO;
 import com.bank.model.Account;
+import com.bank.dao.FakeBankDAO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 
+@WebServlet("/transaction")
 public class TransactionController extends HttpServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-
-        HttpSession session = req.getSession();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
 
         if(acc == null){
-            res.sendRedirect("login.jsp");
+            response.sendRedirect("login.jsp");
             return;
         }
 
-        double amount = Double.parseDouble(req.getParameter("amount"));
-        String type = req.getParameter("type");
+        double amount = Double.parseDouble(request.getParameter("amount"));
+        String type = request.getParameter("type");
+        String error = null;
 
-        if(type.equals("deposit")){
-            acc.setBalance(acc.getBalance() + amount);
-        } else if(type.equals("withdraw")){
-            if(acc.getBalance() >= amount){
-                acc.setBalance(acc.getBalance() - amount);
-            } else {
-                req.setAttribute("error", "Insufficient balance!");
-                req.getRequestDispatcher("transaction.jsp").forward(req, res);
-                return;
+        if("deposit".equals(type)){
+            FakeBankDAO.deposit(acc, amount);
+        } else if("withdraw".equals(type)){
+            if(!FakeBankDAO.withdraw(acc, amount)){
+                error = "Insufficient balance!";
             }
         }
 
-        new FakeBankDAO().updateAccount(acc);
-        session.setAttribute("account", acc);
-
-        res.sendRedirect("dashboard.jsp");
+        if(error != null){
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("transaction.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("dashboard.jsp");
+        }
     }
 }
