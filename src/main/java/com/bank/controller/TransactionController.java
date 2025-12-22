@@ -14,35 +14,36 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
+
 @WebServlet("/transaction")
 public class TransactionController extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
 
-        if(acc == null){
+        if (acc == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
+        String type = request.getParameter("type"); // deposit / withdraw
         double amount = Double.parseDouble(request.getParameter("amount"));
-        String type = request.getParameter("type");
-        String error = null;
 
-        if("deposit".equals(type)){
-            FakeBankDAO.deposit(acc, amount);
-        } else if("withdraw".equals(type)){
-            if(!FakeBankDAO.withdraw(acc, amount)){
-                error = "Insufficient balance!";
+        if ("deposit".equals(type)) {
+            FakeBankDAO.deposit(session, acc, amount);
+        } else if ("withdraw".equals(type)) {
+            boolean success = FakeBankDAO.withdraw(session, acc, amount);
+            if (!success) {
+                request.setAttribute("error", "Insufficient balance!");
+                request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+                return;
             }
         }
 
-        if(error != null){
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("transaction.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("dashboard.jsp");
-        }
+        session.setAttribute("account", acc);
+        response.sendRedirect("dashboard.jsp");
     }
 }

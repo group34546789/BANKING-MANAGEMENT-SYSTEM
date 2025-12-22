@@ -5,7 +5,7 @@
                              https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-    <display-name>BankingApp</display-name>
+    <display-name>Banking</display-name>
 
     <!-- Welcome File -->
     <welcome-file-list>

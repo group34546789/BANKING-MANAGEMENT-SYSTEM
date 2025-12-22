@@ -16,19 +16,27 @@ import java.io.IOException;
 @WebServlet("/account")
 public class AccountController extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String name = request.getParameter("name");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Account acc = FakeBankDAO.createAccount(name, username, password);
+        Account acc = FakeBankDAO.createAccount(
+                request.getSession(),
+                name,
+                username,
+                password
+        );
 
-        if(acc != null){
+        if (acc != null) {
             request.getSession().setAttribute("account", acc);
             response.sendRedirect("dashboard.jsp");
         } else {
-            request.setAttribute("error", "Account creation failed.");
-            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+            request.setAttribute("error", "Username already exists!");
+            request.getRequestDispatcher("createAccount.jsp")
+                   .forward(request, response);
         }
     }
 }

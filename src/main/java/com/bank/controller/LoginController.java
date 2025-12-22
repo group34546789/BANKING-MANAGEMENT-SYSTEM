@@ -13,20 +13,28 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/login")
+
 public class LoginController extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Account acc = FakeBankDAO.login(username, password);
+        Account acc = FakeBankDAO.login(
+                request.getSession(),
+                username,
+                password
+        );
 
-        if(acc != null){
+        if (acc != null) {
             request.getSession().setAttribute("account", acc);
             response.sendRedirect("dashboard.jsp");
         } else {
             request.setAttribute("error", "Invalid username or password");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp")
+                   .forward(request, response);
         }
     }
 }

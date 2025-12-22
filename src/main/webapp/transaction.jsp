@@ -12,7 +12,7 @@
     <title>Transaction</title>
 </head>
 <body>
-<h2>Transaction</h2>
+<h2>Transaction</h2><h2>Sundas Marya</h2>
 <form action="transaction" method="post">
     Amount: <input type="number" name="amount" step="0.01" required><br>
     Type:
