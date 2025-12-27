@@ -1,57 +1,152 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(to right, #1e3c72, #2a5298);
+/* General Reset & Body */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.container {
-    width: 400px;
-    margin: 80px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+body {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-h2 {
-    text-align: center;
+/* Dashboard Container */
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Card Styles */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Card Headers */
+.card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
     color: #1e3c72;
 }
 
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+/* Balance Section */
+.balance {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-input[type=submit] {
+.cards-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.debit-card {
+    flex: 1 1 150px;
+    height: 100px;
+    border-radius: 12px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* Buttons */
+button, .btn {
     background: #1e3c72;
     color: white;
     border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
     cursor: pointer;
-    font-size: 15px;
+    transition: 0.3s ease;
 }
 
-input[type=submit]:hover {
+button:hover, .btn:hover {
     background: #16305a;
 }
 
-a {
-    display: block;
-    text-align: center;
-    margin-top: 12px;
-    color: #1e3c72;
-    text-decoration: none;
+/* Transactions Table/List */
+.transactions, .investments, .goals {
+    list-style: none;
+    padding: 0;
 }
 
-.error {
-    color: red;
-    text-align: center;
+.transactions li, .investments li, .goals li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.transactions li:last-child, .investments li:last-child, .goals li:last-child {
+    border-bottom: none;
+}
+
+/* Graph Containers */
+.graph {
+    width: 100%;
+    height: 200px;
+}
+
+/* Form Inputs */
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+input[type="submit"] {
+    font-weight: bold;
+}
+
+/* Fast Transfer Section */
+.fast-transfer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fast-transfer .contacts {
+    display: flex;
+    gap: 10px;
+}
+
+.fast-transfer .contacts img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s ease;
+}
+
+.fast-transfer .contacts img:hover {
+    border-color: #1e3c72;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+    }
 }
