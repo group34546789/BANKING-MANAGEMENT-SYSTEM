@@ -1,66 +1,100 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.bank.model.Account" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.bank.model.Transaction" %>
+
 <%
-Account acc = (Account) session.getAttribute("account");
-if (acc == null) {
-response.sendRedirect("login.jsp");
-return;
-}
+    Account acc = (Account) session.getAttribute("account");
+    if(acc == null){
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    List<Transaction> transactions = acc.getTransactions();
 %>
-<!DOCTYPE html>
+
 <html>
 <head>
-<title>Bank Dashboard</title>
-<link rel="stylesheet" href="css/dashboard.css">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-
 <div class="app">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Banking System</div>
+        <nav>
+            <a href="dashboard.jsp" class="active">Dashboard</a>
+            <a href="transaction.jsp">New Transaction</a>
+            <a href="transactions">Transaction History</a>
+            <a href="logout.jsp">Logout</a>
+        </nav>
+    </div>
 
+    <!-- Main Content -->
+    <div class="main">
+        <div class="topbar">
+            <h2>Welcome, <%= acc.getName() %></h2>
+        </div>
 
-<!-- Sidebar -->
-<aside class="sidebar">
-<h2 class="logo">VoloBank</h2>
-<nav>
-<a class="active">Dashboard</a>
-<a href="transaction.jsp">Transfer</a>
-<a href="transactions">Transactions</a>
-<a href="logout">Logout</a>
-</nav>
-</aside>
+        <!-- Cards -->
+        <div class="cards">
+            <div class="balance-card green">
+                <h3>Balance</h3>
+                <p>$<%= acc.getBalance() %></p>
+            </div>
+            <div class="balance-card yellow">
+                <h3>Total Transactions</h3>
+                <p><%= transactions.size() %></p>
+            </div>
+        </div>
 
-
-<!-- Main Content -->
-<main class="main">
-<header class="topbar">
-<h3>Welcome, <%= acc.getName() %></h3>
-</header>
-
-
-<!-- Cards -->
-<section class="cards">
-<div class="balance-card yellow">
-<p>Current Balance</p>
-<h1>$<%= acc.getBalance() %></h1>
+        <!-- Chart -->
+        <div class="chart">
+            <canvas id="transactionChart" width="400" height="200"></canvas>
+        </div>
+    </div>
 </div>
 
+<script>
+    const ctx = document.getElementById('transactionChart').getContext('2d');
 
-<div class="balance-card green">
-<p>Username</p>
-<h2><%= acc.getUsername() %></h2>
-</div>
-</section>
+    const labels = [
+        <% for(int i = 0; i < transactions.size(); i++) { %>
+            '<%= transactions.get(i).getDate() %>'<%= i < transactions.size() - 1 ? "," : "" %>
+        <% } %>
+    ];
 
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Transaction Amount',
+            data: [
+                <% for(int i = 0; i < transactions.size(); i++) { %>
+                    <%= transactions.get(i).getAmount() %><%= i < transactions.size() - 1 ? "," : "" %>
+                <% } %>
+            ],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
 
-<!-- Analytics Placeholder -->
-<section class="chart">
-<h4>Account Activity</h4>
-<p>(Chart integration later – Chart.js recommended)</p>
-</section>
-</main>
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    };
 
-
-</div>
+    new Chart(ctx, config);
+</script>
 </body>
 </html>

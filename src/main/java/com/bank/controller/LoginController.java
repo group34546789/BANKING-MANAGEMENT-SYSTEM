@@ -21,6 +21,12 @@ public class LoginController extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+if (password.length() < 6 || password.length() > 12) {
+    request.setAttribute("error", "Password must be between 6 and 12 characters");
+    request.getRequestDispatcher("register.jsp").forward(request, response);
+    return;
+}
+
 
         Account acc = FakeBankDAO.login(
                 request.getSession(),

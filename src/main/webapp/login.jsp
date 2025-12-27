@@ -10,7 +10,11 @@
 <div class="form-container">
     <form action="login" method="post">
         Username: <input type="text" name="username" required>
-        Password: <input type="password" name="password" required>
+        Password: <input type="password" name="password" 
+       pattern=".{6,12}" 
+       title="Password must be between 6 and 12 characters" 
+       required>
+
         <input type="submit" value="Login">
     </form>
 </div>
