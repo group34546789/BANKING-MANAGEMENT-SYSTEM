@@ -49,6 +49,12 @@
             </div>
         </div>
 
+        <!-- Buttons -->
+        <div style="text-align:center; margin-bottom:20px;">
+            <a href="transaction.jsp" class="button">New Transaction</a>
+            <a href="transactions" class="button">Transaction History</a>
+        </div>
+
         <!-- Chart -->
         <div class="chart">
             <canvas id="transactionChart" width="400" height="200"></canvas>
@@ -57,44 +63,40 @@
 </div>
 
 <script>
-    const ctx = document.getElementById('transactionChart').getContext('2d');
+const ctx = document.getElementById('transactionChart').getContext('2d');
 
-    const labels = [
-        <% for(int i = 0; i < transactions.size(); i++) { %>
-            '<%= transactions.get(i).getDate() %>'<%= i < transactions.size() - 1 ? "," : "" %>
-        <% } %>
-    ];
+const labels = [
+    <% for(int i = 0; i < transactions.size(); i++) { %>
+        '<%= transactions.get(i).getDate() %>'<%= i < transactions.size() - 1 ? "," : "" %>
+    <% } %>
+];
 
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Transaction Amount',
-            data: [
-                <% for(int i = 0; i < transactions.size(); i++) { %>
-                    <%= transactions.get(i).getAmount() %><%= i < transactions.size() - 1 ? "," : "" %>
-                <% } %>
-            ],
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    };
+const data = {
+    labels: labels,
+    datasets: [{
+        label: 'Transaction Amount',
+        data: [
+            <% for(int i = 0; i < transactions.size(); i++) { %>
+                <%= transactions.get(i).getAmount() %><%= i < transactions.size() - 1 ? "," : "" %>
+            <% } %>
+        ],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+    }]
+};
 
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    };
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+        responsive: true,
+        plugins: { legend: { display: true } },
+        scales: { y: { beginAtZero: true } }
+    }
+};
 
-    new Chart(ctx, config);
+new Chart(ctx, config);
 </script>
 </body>
 </html>
