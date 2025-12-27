@@ -15,15 +15,18 @@
 </head>
 <body>
 <h2>Transaction</h2><h2>Sundas Marya</h2>
-<form action="transaction" method="post">
-    Amount: <input type="number" name="amount" step="0.01" required><br>
-    Type:
-    <select name="type">
-        <option value="deposit">Deposit</option>
-        <option value="withdraw">Withdraw</option>
-    </select><br>
-    <input type="submit" value="Submit">
-</form>
+<div class="form-container">
+    <form action="transaction" method="post">
+        Amount: <input type="number" name="amount" step="0.01" required>
+        Type:
+        <select name="type">
+            <option value="deposit">Deposit</option>
+            <option value="withdraw">Withdraw</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
 <p style="color:red;">
     <%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %>
 </p>

@@ -7,11 +7,14 @@
 </head>
 <body>
 <h2>Login</h2>
-<form action="login" method="post">
-    Username: <input type="text" name="username" required><br>
-    Password: <input type="password" name="password" required><br>
-    <input type="submit" value="Login">
-</form>
+<div class="form-container">
+    <form action="login" method="post">
+        Username: <input type="text" name="username" required>
+        Password: <input type="password" name="password" required>
+        <input type="submit" value="Login">
+    </form>
+</div>
+
 <p style="color:red;">
     <%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %>
 </p>

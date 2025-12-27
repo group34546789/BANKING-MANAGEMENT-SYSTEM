@@ -1,4 +1,6 @@
-/* General Reset & Body */
+/* =======================
+   General Reset & Body
+   ======================= */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,17 +15,18 @@ body {
     padding: 20px;
 }
 
-/* Dashboard Container */
-.dashboard {
+/* =======================
+   Dashboard Container & Cards
+   ======================= */
+.dashboard, .cards-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
-/* Card Styles */
-.card {
+.card, .debit-card {
     background: #fff;
     border-radius: 12px;
     padding: 20px;
@@ -31,81 +34,66 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Card Headers */
+.card:hover, .debit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
 .card h3 {
     font-size: 1.1rem;
     margin-bottom: 15px;
     color: #1e3c72;
 }
 
-/* Balance Section */
 .balance {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.cards-container {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
 .debit-card {
     flex: 1 1 150px;
     height: 100px;
-    border-radius: 12px;
     color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     padding: 15px;
     background: linear-gradient(135deg, #1e3c72, #2a5298);
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
-/* Buttons */
-button, .btn {
+/* =======================
+   Buttons & Submit Inputs
+   ======================= */
+button, .btn, input[type="submit"] {
     background: #1e3c72;
     color: white;
     border: none;
     border-radius: 8px;
     padding: 10px 15px;
     cursor: pointer;
+    font-weight: bold;
     transition: 0.3s ease;
 }
 
-button:hover, .btn:hover {
+button:hover, .btn:hover, input[type="submit"]:hover {
     background: #16305a;
 }
 
-/* Transactions Table/List */
-.transactions, .investments, .goals {
-    list-style: none;
-    padding: 0;
+/* =======================
+   Forms & Inputs
+   ======================= */
+.form-container {
+    max-width: 400px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.transactions li, .investments li, .goals li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.transactions li:last-child, .investments li:last-child, .goals li:last-child {
-    border-bottom: none;
-}
-
-/* Graph Containers */
-.graph {
-    width: 100%;
-    height: 200px;
-}
-
-/* Form Inputs */
-input, select {
+input, select, textarea {
     width: 100%;
     padding: 10px 12px;
     margin-bottom: 12px;
@@ -114,15 +102,42 @@ input, select {
     font-size: 0.95rem;
 }
 
-input[type="submit"] {
-    font-weight: bold;
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #1e3c72;
+    box-shadow: 0 0 5px rgba(30,60,114,0.5);
 }
 
-/* Fast Transfer Section */
+/* =======================
+   Transactions / Investments / Goals
+   ======================= */
+.transactions, .investments, .goals {
+    list-style: none;
+    padding: 0;
+}
+
+.transactions li, .investments li, .goals li {
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+}
+
+.transactions li:last-child, .investments li:last-child, .goals li:last-child {
+    margin-bottom: 0;
+}
+
+/* =======================
+   Fast Transfer Section
+   ======================= */
 .fast-transfer {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
 }
 
 .fast-transfer .contacts {
@@ -144,9 +159,26 @@ input[type="submit"] {
     border-color: #1e3c72;
 }
 
-/* Responsive Grid Adjustments */
+/* =======================
+   Graph Containers
+   ======================= */
+.graph {
+    width: 100%;
+    height: 200px;
+}
+
+/* =======================
+   Responsive Design
+   ======================= */
 @media (max-width: 768px) {
     .cards-container {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        width: 90%;
+        padding: 15px;
     }
 }
