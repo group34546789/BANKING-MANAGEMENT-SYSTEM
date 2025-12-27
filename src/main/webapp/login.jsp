@@ -22,7 +22,7 @@
     <% } %>
 
     <div style="margin-top:15px;">
-        <a href="register.jsp" class="button">Create new account</a>
+        <a href="createAccount.jsp" class="button">Create new account</a>
     </div>
 </div>
 </body>
