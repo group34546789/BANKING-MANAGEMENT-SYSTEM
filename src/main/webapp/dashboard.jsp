@@ -20,7 +20,6 @@
 </head>
 <body>
 <div class="app">
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">Banking System</div>
         <nav>
@@ -31,13 +30,11 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
     <div class="main">
         <div class="topbar">
             <h2>Welcome, <%= acc.getName() %></h2>
         </div>
 
-        <!-- Cards -->
         <div class="cards">
             <div class="balance-card green">
                 <h3>Balance</h3>
@@ -49,13 +46,11 @@
             </div>
         </div>
 
-        <!-- Buttons -->
         <div style="text-align:center; margin-bottom:20px;">
             <a href="transaction.jsp" class="button">New Transaction</a>
             <a href="transactions" class="button">Transaction History</a>
         </div>
 
-        <!-- Chart -->
         <div class="chart">
             <canvas id="transactionChart" width="400" height="200"></canvas>
         </div>
@@ -66,7 +61,7 @@
 const ctx = document.getElementById('transactionChart').getContext('2d');
 
 const labels = [
-    <% for(int i = 0; i < transactions.size(); i++) { %>
+    <% for(int i = 0; i < transactions.size(); i++){ %>
         '<%= transactions.get(i).getDate() %>'<%= i < transactions.size() - 1 ? "," : "" %>
     <% } %>
 ];
@@ -76,7 +71,7 @@ const data = {
     datasets: [{
         label: 'Transaction Amount',
         data: [
-            <% for(int i = 0; i < transactions.size(); i++) { %>
+            <% for(int i = 0; i < transactions.size(); i++){ %>
                 <%= transactions.get(i).getAmount() %><%= i < transactions.size() - 1 ? "," : "" %>
             <% } %>
         ],
@@ -86,7 +81,7 @@ const data = {
     }]
 };
 
-const config = {
+new Chart(ctx, {
     type: 'bar',
     data: data,
     options: {
@@ -94,9 +89,7 @@ const config = {
         plugins: { legend: { display: true } },
         scales: { y: { beginAtZero: true } }
     }
-};
-
-new Chart(ctx, config);
+});
 </script>
 </body>
 </html>

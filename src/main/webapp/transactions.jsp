@@ -9,9 +9,7 @@
         response.sendRedirect("login.jsp");
         return;
     }
-
-    List<Transaction> transactions =
-            (List<Transaction>) request.getAttribute("transactions");
+    List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
 %>
 
 <html>
@@ -28,14 +26,14 @@
             <th>Amount</th>
             <th>Date</th>
         </tr>
-        <% if (transactions != null && !transactions.isEmpty()) {
-            for (Transaction t : transactions) { %>
+        <% if(transactions != null && !transactions.isEmpty()){ 
+            for(Transaction t : transactions){ %>
         <tr>
             <td><%= t.getType() %></td>
             <td>$<%= t.getAmount() %></td>
             <td><%= t.getDate() %></td>
         </tr>
-        <% } } else { %>
+        <% }} else { %>
         <tr>
             <td colspan="3">No transactions found</td>
         </tr>

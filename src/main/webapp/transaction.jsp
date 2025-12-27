@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.bank.model.Account" %>
-
 <%
     Account acc = (Account) session.getAttribute("account");
     if(acc == null){

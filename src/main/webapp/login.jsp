@@ -1,27 +1,30 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
-<h2>Login</h2>
 <div class="form-container">
+    <h2>Login</h2>
     <form action="login" method="post">
-        Username: <input type="text" name="username" required>
-        Password: <input type="password" name="password" 
-       pattern=".{6,12}" 
-       title="Password must be between 6 and 12 characters" 
-       required>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter username" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter password" required>
 
         <input type="submit" value="Login">
     </form>
-</div>
 
-<p style="color:red;">
-    <%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %>
-</p>
-<a href="createAccount.jsp">Create new account</a>
+    <% if(request.getAttribute("error") != null){ %>
+        <p class="error"><%= request.getAttribute("error") %></p>
+    <% } %>
+
+    <div style="margin-top:15px;">
+        <a href="register.jsp" class="button">Create new account</a>
+    </div>
+</div>
 </body>
 </html>
+
