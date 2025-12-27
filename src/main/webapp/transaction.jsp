@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>Transaction</title>
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 <h2>Transaction</h2><h2>Sundas Marya</h2>
