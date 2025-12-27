@@ -66,56 +66,30 @@ const labels = [
     <% } %>
 ];
 
-const dataValues = [
-    <% for(int i = 0; i < transactions.size(); i++){ %>
-        <%= transactions.get(i).getAmount() %><%= i < transactions.size() - 1 ? "," : "" %>
-    <% } %>
-];
+const data = {
+    labels: labels,
+    datasets: [{
+        label: 'Transaction Amount',
+        data: [
+            <% for(int i = 0; i < transactions.size(); i++){ %>
+                <%= transactions.get(i).getAmount() %><%= i < transactions.size() - 1 ? "," : "" %>
+            <% } %>
+        ],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+    }]
+};
 
 new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Transaction Amount',
-            data: dataValues,
-            borderColor: '#FFD700',               // Gold
-            backgroundColor: 'rgba(255,215,0,0.08)',
-            borderWidth: 3,
-            tension: 0.45,                        // Smooth curve
-            fill: true,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            pointBackgroundColor: '#FFD700',
-            pointBorderColor: '#ffffff'
-        }]
-    },
+    type: 'bar',
+    data: data,
     options: {
         responsive: true,
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#FFD700',
-                    font: { size: 14 }
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: { color: '#bbb' },
-                grid: { display: false }
-            },
-            y: {
-                beginAtZero: true,
-                ticks: { color: '#bbb' },
-                grid: {
-                    color: 'rgba(255,215,0,0.1)'
-                }
-            }
-        }
+        plugins: { legend: { display: true } },
+        scales: { y: { beginAtZero: true } }
     }
 });
 </script>
-
 </body>
 </html>
