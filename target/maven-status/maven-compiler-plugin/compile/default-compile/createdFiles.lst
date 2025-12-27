@@ -2,5 +2,7 @@ com\bank\controller\AccountController.class
 com\bank\controller\LoginController.class
 com\bank\model\Account.class
 com\bank\controller\TransactionController.class
+com\bank\controller\transactionhistory.class
 com\bank\controller\LogoutController.class
 com\bank\dao\FakeBankDAO.class
+com\bank\model\Transaction.class
