@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="form-container">
-    <h2>Transaction History</h2>
+    <h2>Transaction Historey</h2>
     <table>
         <tr>
             <th>Type</th>
