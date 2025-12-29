@@ -32,7 +32,7 @@
 
     <div class="main">
         <div class="topbar">
-            <h2>Welcome, <%= acc.getName() %></h2>
+            <h2>Welcome to, <%= acc.getName() %></h2>
         </div>
 
         <div class="cards">
